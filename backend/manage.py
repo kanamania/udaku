@@ -5,8 +5,9 @@ import sys
 
 
 def main():
-    """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
+    django_env = "$DJANGO_ENVIRONMENT"
+    django_settings_value = "backend.settings.local" if django_env.endswith("DJANGO_ENVIRONMENT") else django_env
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", django_settings_value)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

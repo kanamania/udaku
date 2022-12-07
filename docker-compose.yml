@@ -1,0 +1,88 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: bash -c "python manage.py makemigrations &&
+                      python manage.py migrate &&
+                      python manage.py createcachetable &&
+                      python manage.py init_admin &&
+                      python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend/:/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    depends_on:
+      - mysql_db
+
+  mysql_db:
+    image: mariadb:10.8
+    volumes:
+      - $DATA_DIR/mysql:/var/lib/mysql/
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_USER=${SQL_USER}
+      - MYSQL_PASSWORD=${SQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${SQL_PASSWORD}
+      - MYSQL_DATABASE=${SQL_DATABASE}
+
+  redis:
+    image: redis:6.0.9
+    ports:
+      - 6379:6379
+    command: redis-server
+    volumes:
+      - $DATA_DIR/redis-data:/var/lib/redis
+      - $DATA_DIR/redis.conf:/usr/local/etc/redis/redis.conf
+
+  celery:
+    build: ./backend
+    command: celery -A backend worker -l info --concurrency=10 -n worker1@%h
+    volumes:
+      - ./backend/:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - mysql_db
+      - redis
+  celery-beat:
+    build: ./backend
+    command: celery -A backend beat -l info
+    volumes:
+      - ./backend/:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - mysql_db
+      - redis
+  frontend:
+    env_file:
+      - ./.env
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm run dev
+    restart: always
+    stdin_open: true
+    volumes:
+      - ./frontend:/app/frontend:rw
+    ports:
+      - "3000:3000"
+  phpmyadmin:
+    env_file:
+      - ./.env
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITARY=1
+      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+      - PMA_PORT="${SQL_PORT_MYSQL}
+      - PMA_HOST=${SQL_HOST_MYSQL}
+    volumes:
+      - $DATA_DIR/sessions:/sessions
