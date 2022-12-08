@@ -26,7 +26,7 @@ module.exports = {
       ],
     }),
     new HtmlWebpackPlugin({
-      title: 'Todos',
+      title: 'Udaku',
       template: `${paths.public}/index.html`,
       filename: 'index.html',
     }),

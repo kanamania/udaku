@@ -1,11 +1,9 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
-import todosReducer from '../features/todos/todosSlice';
-import modalReducer from '../features/modal/modalSlice';
+import postsReducer from '../features/posts/postsSlice';
 
 export const store = configureStore({
   reducer: {
-    todos: todosReducer,
-    modal: modalReducer,
+    posts: postsReducer,
   },
 });
 

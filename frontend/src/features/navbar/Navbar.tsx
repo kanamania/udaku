@@ -1,40 +1,49 @@
 import * as React from 'react';
-import dateFormat from 'dateformat';
-import { HiPlusCircle } from '@react-icons/all-files/hi/HiPlusCircle';
-import styles from './Navbar.module.css';
-import { toggleModal } from '../modal/modalSlice';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectTodos, deleteAllTodos } from '../todos/todosSlice';
 
 const Navbar = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { todos } = useAppSelector(selectTodos);
-  const onToggleModal = () => dispatch(toggleModal());
 
-  const renderDisplayDate = (): string => {
-    const today = Date.now();
-    return dateFormat(today, 'mmmm dS');
-  };
 
-  const onDeleteAllTodos = () => dispatch(deleteAllTodos());
-
-  const renderClearTasks = (): string | undefined => {
-    return todos.length === 0 ? undefined : 'CLEAR ALL';
-  };
-
-  return (
-    <nav className={styles.container}>
-      <time>{renderDisplayDate()}</time>
-      <h2 className={styles.count}>
-        {todos.length === 1
-          ? `${todos.length} OPEN TASK`
-          : `${todos.length} OPEN TASKS`}
-        <span onClick={onDeleteAllTodos}>{renderClearTasks()}</span>
-      </h2>
-      <div className={styles.iconWrap}>
-        <HiPlusCircle onClick={onToggleModal} className={styles.icon} />
-      </div>
+  // noinspection CheckTagEmptyBody
+    return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container">
+            <a className="navbar-brand" href="#">Navbar</a>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li className="nav-item">
+                        <a className="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Link</a>
+                    </li>
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a className="dropdown-item" href="#">Action</a></li>
+                            <li><a className="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr className="dropdown-divider" />
+                            </li>
+                            <li><a className="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form className="d-flex">
+                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
     </nav>
   );
 };

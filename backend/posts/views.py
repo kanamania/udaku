@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework import viewsets, permissions
 from posts.permissions import IsOwnerOrReadOnly
 from posts.serializers import *
@@ -12,6 +14,9 @@ class PostCategoryViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
+    def perform_delete(self, serializer):
+        serializer.save(remover=self.request.user, deleted_at=datetime.now())
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -20,7 +25,13 @@ class PostViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        serializer.save(creator=self.request.user.id)
+
+    def perform_update(self, serializer):
+        serializer.save(modifier=self.request.user)
+
+    def perform_delete(self, serializer):
+        serializer.save(remover=self.request.user, deleted_at=datetime.now())
 
 
 class PostReactionViewSet(viewsets.ModelViewSet):
@@ -32,6 +43,9 @@ class PostReactionViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
+    def perform_delete(self, serializer):
+        serializer.save(remover=self.request.user, deleted_at=datetime.now())
+
 
 class PostCommentViewSet(viewsets.ModelViewSet):
     queryset = PostComment.objects.all()
@@ -42,6 +56,9 @@ class PostCommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
+    def perform_delete(self, serializer):
+        serializer.save(remover=self.request.user, deleted_at=datetime.now())
+
 
 class PostCommentReactionViewSet(viewsets.ModelViewSet):
     queryset = PostCommentReaction.objects.all()
@@ -51,3 +68,6 @@ class PostCommentReactionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+    def perform_delete(self, serializer):
+        serializer.save(remover=self.request.user, deleted_at=datetime.now())

@@ -1,10 +1,12 @@
 from rest_framework import permissions, viewsets
-from settings.permissions import IsOwnerOrReadOnly
-from settings.serializers import *
+from .permissions import IsOwnerOrReadOnly
+from .serializers import *
+
+from .models import CustomUser
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]

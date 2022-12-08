@@ -1,2 +1,2 @@
 # Udaku
-Simple blog site
+A blog application
