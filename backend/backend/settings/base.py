@@ -24,9 +24,9 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(" ")
 
 # Application definition
 BUILD_INSTALLED_APPS = [
-    'conf',
     'dashboard',
     'posts',
+    'config',
 ]
 
 THIRD_PARTY_INSTALLED_APPS = [
@@ -58,7 +58,7 @@ INSTALLED_APPS = (
     + BUILD_INSTALLED_APPS
 )
 
-AUTH_USER_MODEL = "conf.CustomUser"
+AUTH_USER_MODEL = "config.CustomUser"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Africa/Dar_es_salaam"
+TIME_ZONE = "Africa/Dar_es_Salaam"
 
 USE_I18N = True
 
@@ -144,7 +144,7 @@ MEDIA_URL = "/mediafiles/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 # CELERY settings
-CELERY_TIMEZONE = "Africa/Dar_es_salaam"
+CELERY_TIMEZONE = "Africa/Dar_es_Salaam"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_ACCEPT_CONTENT = ["application/json"]

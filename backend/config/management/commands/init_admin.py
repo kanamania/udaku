@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import os
 
-from conf.models import CustomUser
+from config.models import CustomUser
 
 
 class Command(BaseCommand):

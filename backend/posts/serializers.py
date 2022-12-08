@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from conf.serializers import UserSerializer
+from config.serializers import UserSerializer
 from .models import *
-from conf.models import CustomUser
+from config.models import CustomUser
 
 
 class PostCategorySerializer(serializers.HyperlinkedModelSerializer):

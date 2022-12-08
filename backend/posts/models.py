@@ -3,7 +3,7 @@ import hashlib
 from django.contrib.auth.models import User
 from django.db import models
 
-from conf.models import CustomUser
+from config.models import CustomUser
 
 
 def user_directory_path(instance, filename):
