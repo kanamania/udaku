@@ -1,2 +1,3 @@
 # Udaku
-A blog application
+A news blog application
+
