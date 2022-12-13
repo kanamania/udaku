@@ -37,7 +37,7 @@ class Category(models.Model):
     modifier = models.ForeignKey(CustomUser, related_name='modified_categories', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    deleted_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(null=True)
 
     class Meta:
         db_table = 'category'
@@ -54,7 +54,7 @@ class Region(models.Model):
     modifier = models.ForeignKey(CustomUser, null=True, related_name='modified_regions', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    deleted_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(null=True)
 
     class Meta:
         db_table = 'region'
@@ -70,7 +70,7 @@ class District(models.Model):
     modifier = models.ForeignKey(CustomUser, related_name='modified_districts', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    deleted_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(null=True)
 
     class Meta:
         db_table = 'district'
@@ -87,7 +87,7 @@ class Log(models.Model):
     record = models.BigIntegerField()
     creator = models.ForeignKey(CustomUser, related_name='created_log', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(null=True)
 
     class Meta:
         db_table = 'log'
@@ -106,7 +106,7 @@ class Setting(models.Model):
     modifier = models.ForeignKey(CustomUser, related_name='modified_settings', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    deleted_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(null=True)
 
     class Meta:
         db_table = 'setting'
