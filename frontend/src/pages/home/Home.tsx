@@ -1,10 +1,13 @@
 import * as React from 'react';
-import Posts from '../../features/posts/Posts';
+import Posts from '../posts/Posts';
 
 const Home = (): JSX.Element => {
 
   return (
+      <>
+        <h3>Home</h3>
       <Posts />
+      </>
   );
 }
 

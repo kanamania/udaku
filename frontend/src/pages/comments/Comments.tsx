@@ -1,11 +1,14 @@
 import * as React from 'react';
-import Posts from '../../features/posts/Posts';
+import Posts from '../posts/Posts';
 
 const Comments = (): JSX.Element => {
 
-  return (
-      <Posts />
-  );
+    return (
+        <>
+            <h3>Comments</h3>
+            <Posts/>
+        </>
+    );
 }
 
 export default Comments;

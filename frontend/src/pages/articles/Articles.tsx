@@ -1,11 +1,14 @@
 import * as React from 'react';
-import Posts from '../../features/posts/Posts';
+import Posts from '../posts/Posts';
 
 const Articles = (): JSX.Element => {
 
-  return (
-      <Posts />
-  );
+    return (
+        <>
+            <h3>Articles</h3>
+            <Posts/>
+        </>
+    );
 }
 
 export default Articles;
