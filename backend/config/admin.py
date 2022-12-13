@@ -40,10 +40,14 @@ class CategoryAdmin(ModelAdmin):
     add_form = CategoryCreationForm
     form = CategoryChangeForm
     model = Category
-    list_display = ["name", "description", "creator", 'created_at']
+    list_display = ["name", "description", "creator", 'created_at', 'status']
     search_fields = ('name', 'description')
     ordering = ('name',)
     filter_horizontal = ()
+    readonly_fields = ["status"]
+
+    def status(self, obj):
+        return 'Inactive' if obj.deleted_at else 'Active'
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -65,10 +69,14 @@ class RegionAdmin(ModelAdmin):
     add_form = RegionCreationForm
     form = RegionChangeForm
     model = Region
-    list_display = ["name", "creator", 'created_at']
+    list_display = ["name", "creator", 'created_at', 'status']
     search_fields = ('name',)
     ordering = ('name',)
     filter_horizontal = ()
+    readonly_fields = ["status"]
+
+    def status(self, obj):
+        return 'Inactive' if obj.deleted_at else 'Active'
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -90,11 +98,15 @@ class DistrictAdmin(ModelAdmin):
     add_form = DistrictCreationForm
     form = DistrictChangeForm
     model = District
-    list_display = ["name", "region", "creator", 'created_at']
+    list_display = ["name", "region", "creator", 'created_at', 'status']
     list_filter = ['region']
     search_fields = ('name',)
     ordering = ('name', 'region')
     filter_horizontal = ()
+    readonly_fields = ["status"]
+
+    def status(self, obj):
+        return 'Inactive' if obj.deleted_at else 'Active'
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -114,11 +126,15 @@ class DistrictAdmin(ModelAdmin):
 
 class LogAdmin(ModelAdmin):
     model = Log
-    list_display = ["tag", "description", 'created_at']
+    list_display = ["tag", "description", 'created_at', 'status']
     list_filter = ['tag']
     search_fields = ('tag', 'description')
     ordering = ('tag', 'description')
     filter_horizontal = ()
+    readonly_fields = ["status"]
+
+    def status(self, obj):
+        return 'Inactive' if obj.deleted_at else 'Active'
 
     def save_model(self, request, obj, form, change):
         if not change:
@@ -138,12 +154,16 @@ class SettingAdmin(ModelAdmin):
     add_form = SettingCreationForm
     form = SettingChangeForm
     model = Setting
-    list_display = ["category", "tag", "description", "current_value", "creator", 'updated_at']
+    list_display = ["category", "tag", "description", "current_value", "creator", 'updated_at', 'status']
     list_filter = ['category']
 
     search_fields = ('tag', 'category', 'description')
     ordering = ('category', 'tag', 'description')
     filter_horizontal = ()
+    readonly_fields = ["status"]
+
+    def status(self, obj):
+        return 'Inactive' if obj.deleted_at else 'Active'
 
     def save_model(self, request, obj, form, change):
         if change:
