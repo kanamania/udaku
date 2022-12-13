@@ -28,16 +28,24 @@ class CustomUser(AbstractUser):
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True)
+    parent = models.ForeignKey('self', related_name='categories', on_delete=models.DO_NOTHING, null=True)
     creator = models.ForeignKey(CustomUser, related_name='created_categories', on_delete=models.DO_NOTHING)
     modifier = models.ForeignKey(CustomUser, related_name='modified_categories', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'category'
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        return self.name
 
 
 class Region(models.Model):
@@ -46,21 +54,29 @@ class Region(models.Model):
     modifier = models.ForeignKey(CustomUser, null=True, related_name='modified_regions', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'region'
 
+    def __str__(self):
+        return self.name
+
 
 class District(models.Model):
     name = models.CharField(max_length=200)
-    region = models.BigIntegerField()
+    region = models.ForeignKey(Region, related_name='districts', on_delete=models.DO_NOTHING)
     creator = models.ForeignKey(CustomUser, related_name='created_districts', on_delete=models.DO_NOTHING)
     modifier = models.ForeignKey(CustomUser, related_name='modified_districts', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'district'
+
+    def __str__(self):
+        return self.name+': '+self.region.name
 
 
 class Log(models.Model):
@@ -71,9 +87,13 @@ class Log(models.Model):
     record = models.BigIntegerField()
     creator = models.ForeignKey(CustomUser, related_name='created_log', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
+    deleted_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'log'
+
+    def __str__(self):
+        return self.tag+' '+self.description
 
 
 class Setting(models.Model):
@@ -86,9 +106,12 @@ class Setting(models.Model):
     modifier = models.ForeignKey(CustomUser, related_name='modified_settings', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
+    deleted_at = models.DateTimeField(auto_now=True, null=True)
 
     class Meta:
         db_table = 'setting'
 
+    def __str__(self):
+        return self.tag+' '+self.description
 
 
