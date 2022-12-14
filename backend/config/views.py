@@ -1,3 +1,4 @@
+from django.views import generic
 from rest_framework import permissions, viewsets
 from .permissions import IsOwnerOrReadOnly
 from .serializers import *
@@ -12,6 +13,10 @@ class UserViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly]
 
 
+class UserDetailView(generic.DetailView):
+    model = CustomUser
+
+
 class SettingViewSet(viewsets.ModelViewSet):
     queryset = Setting.objects.all()
     serializer_class = SettingSerializer
@@ -20,6 +25,10 @@ class SettingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+class SettingDetailView(generic.DetailView):
+    model = Setting
 
 
 class LogViewSet(viewsets.ModelViewSet):
@@ -32,6 +41,10 @@ class LogViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user)
 
 
+class LogDetailView(generic.DetailView):
+    model = Log
+
+
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -40,6 +53,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+class CategoryDetailView(generic.DetailView):
+    model = Category
 
 
 class RegionViewSet(viewsets.ModelViewSet):
@@ -52,6 +69,10 @@ class RegionViewSet(viewsets.ModelViewSet):
         serializer.save(creator=self.request.user)
 
 
+class RegionDetailView(generic.DetailView):
+    model = Region
+
+
 class DistrictViewSet(viewsets.ModelViewSet):
     queryset = District.objects.all()
     serializer_class = DistrictSerializer
@@ -60,3 +81,8 @@ class DistrictViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+class DistrictDetailView(generic.DetailView):
+    model = District
+

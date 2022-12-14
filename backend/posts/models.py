@@ -1,7 +1,8 @@
 import hashlib
 
-from django.contrib.auth.models import User
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
+from ckeditor.fields import RichTextField
 
 from config.models import CustomUser
 
@@ -28,8 +29,13 @@ class PostCategory(models.Model):
 class Post(models.Model):
     image = models.ImageField(upload_to=user_directory_path)
     name = models.CharField(max_length=200)
-    description = models.TextField(null=True)
-    category = models.BigIntegerField(null=True)
+    body = RichTextField(null=True, validators=[
+        MinLengthValidator(256, 'body must contain at least 256 characters')
+    ])
+    description = models.TextField(null=True, validators=[
+        MaxLengthValidator(128, 'description must contain at most 128 characters')
+    ])
+    category = models.ForeignKey(PostCategory, related_name='posts', null=True, on_delete=models.DO_NOTHING)
     creator = models.ForeignKey(CustomUser, related_name='created_posts', on_delete=models.DO_NOTHING)
     modifier = models.ForeignKey(CustomUser, related_name='modified_posts', blank=True, on_delete=models.DO_NOTHING)
     remover = models.ForeignKey(CustomUser, blank=True, related_name='removed_posts', on_delete=models.DO_NOTHING)
@@ -44,7 +50,9 @@ class Post(models.Model):
 class PostComment(models.Model):
     post = models.BigIntegerField()
     parent = models.BigIntegerField(null=True)
-    description = models.TextField(null=True)
+    description = RichTextField(validators=[
+        MaxLengthValidator(12, 'comment description must contain at most 12 characters')
+    ], null=True)
     creator = models.ForeignKey(CustomUser, related_name='created_post_comments', on_delete=models.DO_NOTHING)
     remover = models.ForeignKey(CustomUser, related_name='removed_post_comments', blank=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)

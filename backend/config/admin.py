@@ -3,6 +3,8 @@ from datetime import datetime
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
+from django.urls import reverse
+from django.utils.html import format_html
 
 from .forms import *
 from .models import *
@@ -51,11 +53,14 @@ class CategoryAdmin(ModelAdmin):
     add_form = CategoryCreationForm
     form = CategoryChangeForm
     model = Category
-    list_display = ["name", "description", "creator", 'created_at', 'status']
+    list_display = ["show_name", "description", "creator", 'created_at', 'status']
     search_fields = ('name', 'description')
     ordering = ('name',)
     filter_horizontal = ()
-    readonly_fields = ["status"]
+
+    def show_name(self, obj):
+        url = reverse('admin:%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.name)
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
@@ -77,15 +82,20 @@ class CategoryAdmin(ModelAdmin):
             self.delete_model(request, obj)
 
 
+
+
 class RegionAdmin(ModelAdmin):
     add_form = RegionCreationForm
     form = RegionChangeForm
     model = Region
-    list_display = ["name", "creator", 'created_at', 'status']
+    list_display = ["show_name", "creator", 'created_at', 'status']
     search_fields = ('name',)
     ordering = ('name',)
     filter_horizontal = ()
-    readonly_fields = ["status"]
+
+    def show_name(self, obj):
+        url = reverse('admin:%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.name)
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
@@ -112,11 +122,16 @@ class DistrictAdmin(ModelAdmin):
     add_form = DistrictCreationForm
     form = DistrictChangeForm
     model = District
-    list_display = ["name", "region", "creator", 'created_at', 'status']
+    list_display = ["show_name", "region", "creator", 'created_at', 'status']
     list_filter = ['region']
     search_fields = ('name',)
     ordering = ('name', 'region', 'created_at')
     filter_horizontal = ()
+
+    def show_name(self, obj):
+        url = reverse('config_district_detail', args=[obj.id])
+        return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.name)
+    show_name.short_description = "Name"
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'

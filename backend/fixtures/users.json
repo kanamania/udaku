@@ -1,0 +1,38 @@
+[
+  {
+    "model": "config.CustomUser",
+    "pk": 1,
+    "fields": {
+      "first_name": "System",
+      "middle_name": "Developer",
+      "last_name": "Developer",
+      "username": "developer",
+      "email": "k.mahenge@gmail.com",
+      "creator": 1
+    }
+  },
+  {
+    "model": "config.CustomUser",
+    "pk": 2,
+    "fields": {
+      "first_name": "Post",
+      "middle_name": "",
+      "last_name": "Editor",
+      "username": "editor",
+      "email": "kanailomayani@gmail.com",
+      "creator": 1
+    }
+  },
+  {
+    "model": "config.CustomUser",
+    "pk": 3,
+    "fields": {
+      "first_name": "Site",
+      "middle_name": "",
+      "last_name": "Visitor",
+      "username": "visitor",
+      "email": "arushaman99@gmail.com",
+      "creator": 1
+    }
+  }
+]

@@ -45,17 +45,18 @@ THIRD_PARTY_INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS = (
-    [
-        "jazzmin",
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.messages",
-        "django.contrib.staticfiles",
-    ]
-    + THIRD_PARTY_INSTALLED_APPS
-    + BUILD_INSTALLED_APPS
+        [
+            "jazzmin",
+            "ckeditor",
+            "django.contrib.admin",
+            "django.contrib.auth",
+            "django.contrib.contenttypes",
+            "django.contrib.sessions",
+            "django.contrib.messages",
+            "django.contrib.staticfiles",
+        ]
+        + THIRD_PARTY_INSTALLED_APPS
+        + BUILD_INSTALLED_APPS
 )
 
 AUTH_USER_MODEL = "config.CustomUser"
@@ -76,7 +77,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [os.path.join(BASE_DIR, 'templates/')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -129,7 +130,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 30,
 }
 
-
 CORS_ALLOW_HEADERS = default_headers + ("No-Auth",)
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
@@ -150,3 +150,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
+
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, "fixtures"),
+]

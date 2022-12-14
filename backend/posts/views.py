@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.views import generic
 from rest_framework import viewsets, permissions
 from posts.permissions import IsOwnerOrReadOnly
 from posts.serializers import *
@@ -18,6 +19,9 @@ class PostCategoryViewSet(viewsets.ModelViewSet):
         serializer.save(remover=self.request.user, deleted_at=datetime.now())
 
 
+class PostCategoryDetailView(generic.DetailView):
+    model = PostCategory
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -33,6 +37,9 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_delete(self, serializer):
         serializer.save(remover=self.request.user, deleted_at=datetime.now())
 
+
+class PostDetailView(generic.DetailView):
+    model = Post
 
 class PostReactionViewSet(viewsets.ModelViewSet):
     queryset = PostReaction.objects.all()
@@ -59,6 +66,9 @@ class PostCommentViewSet(viewsets.ModelViewSet):
     def perform_delete(self, serializer):
         serializer.save(remover=self.request.user, deleted_at=datetime.now())
 
+
+class PostCommentDetailView(generic.DetailView):
+    model = PostComment
 
 class PostCommentReactionViewSet(viewsets.ModelViewSet):
     queryset = PostCommentReaction.objects.all()

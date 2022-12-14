@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <p><strong>ID:</strong> <a href="">{{ district.id }}</a></p>
+  <p><strong>Name:</strong> <a href="">{{ district.name }}</a></p>
+  <p><strong>Region:</strong> {{ district.region.name }}</p>
+  <p><strong>Created by:</strong> {{ district.created_at }}</p>
+  <p><strong>Creator:</strong> {{ district.creator.name }}</p>
+  <p><strong>Last updated:</strong> {{ None if district.updated_at == None else district.updated_at }}</p>
+
+{% endblock %}
