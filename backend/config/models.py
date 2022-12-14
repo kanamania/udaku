@@ -23,6 +23,9 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.first_name+' '+self.last_name
 
+    def status(self):
+        return None if self.deleted_at is None else 1
+
     class Meta:
         db_table = 'user'
         verbose_name = 'user'
@@ -44,6 +47,9 @@ class Category(models.Model):
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
+    def status(self):
+        return None if self.deleted_at is None else 1
+
     def __str__(self):
         return self.name
 
@@ -58,6 +64,9 @@ class Region(models.Model):
 
     class Meta:
         db_table = 'region'
+
+    def status(self):
+        return None if self.deleted_at is None else 1
 
     def __str__(self):
         return self.name
@@ -75,6 +84,9 @@ class District(models.Model):
     class Meta:
         db_table = 'district'
 
+    def status(self):
+        return None if self.deleted_at is None else 1
+
     def __str__(self):
         return self.name+': '+self.region.name
 
@@ -91,6 +103,9 @@ class Log(models.Model):
 
     class Meta:
         db_table = 'log'
+
+    def status(self):
+        return None if self.deleted_at is None else 1
 
     def __str__(self):
         return self.tag+' '+self.description
@@ -110,6 +125,9 @@ class Setting(models.Model):
 
     class Meta:
         db_table = 'setting'
+
+    def status(self):
+        return None if self.deleted_at is None else 1
 
     def __str__(self):
         return self.tag+' '+self.description

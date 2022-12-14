@@ -12,10 +12,10 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ["username", "email", "first_name", "last_name", "is_superuser", 'created_at']
+    list_display = ["username", "email", "first_name", "last_name", "is_superuser", 'created_at', 'status']
     list_filter = ['is_superuser']
     fieldsets = (
-        ('Account', {'fields': ('username', 'email', 'phone', 'password')}),
+        ('Account', {'fields': ('username', 'email', 'phone', 'password', 'status')}),
         ('Personal info', {'fields': ('first_name', 'middle_name', 'last_name', 'birthdate',)}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
@@ -34,6 +34,17 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('first_name', 'last_name', 'username', 'phone', 'birthdate', 'email',)
     filter_horizontal = ()
+
+    def status(self, obj):
+        return 'Inactive' if obj.deleted_at else 'Active'
+
+    def save_model(self, request, obj, form, change):
+        if change:
+            obj.modifier = request.user
+        else:
+            obj.creator = request.user
+        obj.deleted_at = None if request.POST['status'] != '1' else datetime.now()
+        super().save_model(request, obj, form, change)
 
 
 class CategoryAdmin(ModelAdmin):
@@ -54,6 +65,7 @@ class CategoryAdmin(ModelAdmin):
             obj.modifier = request.user
         else:
             obj.creator = request.user
+        obj.deleted_at = None if request.POST['status'] != '1' else datetime.now()
         super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
@@ -83,6 +95,7 @@ class RegionAdmin(ModelAdmin):
             obj.modifier = request.user
         else:
             obj.creator = request.user
+        obj.deleted_at = None if request.POST['status'] != '1' else datetime.now()
         super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
@@ -95,15 +108,15 @@ class RegionAdmin(ModelAdmin):
 
 
 class DistrictAdmin(ModelAdmin):
+    MY_CHOICES = [(None, 'Active'), (1, 'Inactive')]
     add_form = DistrictCreationForm
     form = DistrictChangeForm
     model = District
     list_display = ["name", "region", "creator", 'created_at', 'status']
     list_filter = ['region']
     search_fields = ('name',)
-    ordering = ('name', 'region')
+    ordering = ('name', 'region', 'created_at')
     filter_horizontal = ()
-    readonly_fields = ["status"]
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
@@ -113,6 +126,7 @@ class DistrictAdmin(ModelAdmin):
             obj.modifier = request.user
         else:
             obj.creator = request.user
+        obj.deleted_at = None if request.POST['status'] != '1' else datetime.now()
         super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
@@ -139,6 +153,7 @@ class LogAdmin(ModelAdmin):
     def save_model(self, request, obj, form, change):
         if not change:
             obj.creator = request.user
+        obj.deleted_at = None if request.POST['status'] != '1' else datetime.now()
         super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
@@ -170,6 +185,7 @@ class SettingAdmin(ModelAdmin):
             obj.modifier = request.user
         else:
             obj.creator = request.user
+        obj.deleted_at = None if request.POST['status'] != '1' else datetime.now()
         super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
