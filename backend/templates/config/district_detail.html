@@ -1,11 +1,31 @@
-{% extends "base_generic.html" %}
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% block title %}{% trans 'District:' %} {{ district.name }} | {% trans 'Udaku' %}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content_title %} {% trans 'District' %}: <strong>{{ district.name }}</strong> {% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin:config_district_changelist' %}">{% trans 'Districts' %}</a></li>
+        <li class="breadcrumb-item">{% trans 'District View' %}</li>
+    </ol>
+{% endblock %}
 
 {% block content %}
-  <p><strong>ID:</strong> <a href="">{{ district.id }}</a></p>
-  <p><strong>Name:</strong> <a href="">{{ district.name }}</a></p>
-  <p><strong>Region:</strong> {{ district.region.name }}</p>
-  <p><strong>Created by:</strong> {{ district.created_at }}</p>
-  <p><strong>Creator:</strong> {{ district.creator.name }}</p>
-  <p><strong>Last updated:</strong> {{ None if district.updated_at == None else district.updated_at }}</p>
+    {% get_side_menu using="app_list" as dashboard_list %}
 
+    <div class="container">
+      <table class="table">
+        <tr><td>ID:</td><td>{{ district.id }}</td></tr>
+        <tr><td>Name:</td><td>{{ district.name }}</td></tr>
+        <tr><td>Region:</td><td>{{ district.region.name }}</td></tr>
+        <tr><td>Created by:</td><td>{{ district.created_at }}</td></tr>
+        <tr><td>Creator:</td><td>{{ district.creator }}</td></tr>
+        <tr><td>Last updated:</td><td>{{ district.updated_at }}</td></tr>
+      </table>
+    </div>
 {% endblock %}

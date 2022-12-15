@@ -1,0 +1,32 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% block title %}{% trans 'Post Comment for:' %} {{ postcomment.post }} | {% trans 'Udaku' %}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content_title %} {% trans 'Post Comment for' %}: <strong>{{ postcomment.post }}</strong> {% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin:posts_postcomment_changelist' %}">{% trans 'Post Comments' %}</a></li>
+        <li class="breadcrumb-item">{% trans 'Post Comment View' %}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% get_side_menu using="app_list" as dashboard_list %}
+
+    <div class="container">
+      <table class="table">
+        <tr><td>ID:</td><td>{{ postcomment.id }}</td></tr>
+        <tr><td>Post:</td><td>{{ postcomment.post }}</td></tr>
+        <tr><td>Comment:</td><td>{{ postcomment.description|striptags }}</td></tr>
+        <tr><td>Parent:</td><td>{{ postcomment.parent }}</td></tr>
+        <tr><td>Created at:</td><td>{{ postcomment.created_at }}</td></tr>
+        <tr><td>Creator:</td><td>{{ postcomment.creator }}</td></tr>
+        <tr><td>Last updated:</td><td>{{ postcomment.updated_at }}</td></tr>
+      </table>
+    </div>
+{% endblock %}

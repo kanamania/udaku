@@ -2,8 +2,9 @@ from datetime import datetime
 
 from django.views import generic
 from rest_framework import viewsets, permissions
-from posts.permissions import IsOwnerOrReadOnly
-from posts.serializers import *
+from .permissions import IsOwnerOrReadOnly
+from .serializers import *
+from .models import *
 
 
 class PostCategoryViewSet(viewsets.ModelViewSet):
@@ -21,6 +22,7 @@ class PostCategoryViewSet(viewsets.ModelViewSet):
 
 class PostCategoryDetailView(generic.DetailView):
     model = PostCategory
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -40,6 +42,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class PostDetailView(generic.DetailView):
     model = Post
+
 
 class PostReactionViewSet(viewsets.ModelViewSet):
     queryset = PostReaction.objects.all()
@@ -69,6 +72,7 @@ class PostCommentViewSet(viewsets.ModelViewSet):
 
 class PostCommentDetailView(generic.DetailView):
     model = PostComment
+
 
 class PostCommentReactionViewSet(viewsets.ModelViewSet):
     queryset = PostCommentReaction.objects.all()

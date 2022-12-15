@@ -14,7 +14,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ["username", "email", "first_name", "last_name", "is_superuser", 'created_at', 'status']
+    list_display = ["username", "email", "first_name", "last_name", "is_superuser", 'created_at', 'status', 'show_actions']
     list_filter = ['is_superuser']
     fieldsets = (
         ('Account', {'fields': ('username', 'email', 'phone', 'password', 'status')}),
@@ -37,6 +37,18 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('first_name', 'last_name', 'username', 'phone', 'birthdate', 'email',)
     filter_horizontal = ()
 
+    def show_name(self, obj):
+        url = reverse('%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.username)
+    show_name.short_description = "Username"
+
+    def show_actions(self, obj):
+        edit_url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        delete_url = reverse('admin:%s_%s_delete' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        history_url = reverse('admin:%s_%s_history' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html(f"<a href='{edit_url}'><i class='fa fa-edit'></i></a><a class='text-danger mr-2 ml-2' href='{delete_url}'><i class='fa fa-trash'></i></a><a class='text-black-50' href='{history_url}'><i class='fa fa-clock'></i></a>", edit_url=edit_url, delete_url=delete_url, history_url=history_url)
+    show_actions.short_description = "Actions"
+
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
 
@@ -53,14 +65,22 @@ class CategoryAdmin(ModelAdmin):
     add_form = CategoryCreationForm
     form = CategoryChangeForm
     model = Category
-    list_display = ["show_name", "description", "creator", 'created_at', 'status']
+    list_display = ["show_name", "description", "creator", 'created_at', 'status', 'show_actions']
     search_fields = ('name', 'description')
     ordering = ('name',)
     filter_horizontal = ()
 
     def show_name(self, obj):
-        url = reverse('admin:%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        url = reverse('%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
         return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.name)
+    show_name.short_description = "Name"
+
+    def show_actions(self, obj):
+        edit_url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        delete_url = reverse('admin:%s_%s_delete' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        history_url = reverse('admin:%s_%s_history' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html(f"<a href='{edit_url}'><i class='fa fa-edit'></i></a><a class='text-danger mr-2 ml-2' href='{delete_url}'><i class='fa fa-trash'></i></a><a class='text-black-50' href='{history_url}'><i class='fa fa-clock'></i></a>", edit_url=edit_url, delete_url=delete_url, history_url=history_url)
+    show_actions.short_description = "Actions"
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
@@ -88,14 +108,22 @@ class RegionAdmin(ModelAdmin):
     add_form = RegionCreationForm
     form = RegionChangeForm
     model = Region
-    list_display = ["show_name", "creator", 'created_at', 'status']
+    list_display = ["show_name", "creator", 'created_at', 'status', 'show_actions']
     search_fields = ('name',)
     ordering = ('name',)
     filter_horizontal = ()
 
     def show_name(self, obj):
-        url = reverse('admin:%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        url = reverse('%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
         return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.name)
+    show_name.short_description = "Name"
+
+    def show_actions(self, obj):
+        edit_url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        delete_url = reverse('admin:%s_%s_delete' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        history_url = reverse('admin:%s_%s_history' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html(f"<a href='{edit_url}'><i class='fa fa-edit'></i></a><a class='text-danger mr-2 ml-2' href='{delete_url}'><i class='fa fa-trash'></i></a><a class='text-black-50' href='{history_url}'><i class='fa fa-clock'></i></a>", edit_url=edit_url, delete_url=delete_url, history_url=history_url)
+    show_actions.short_description = "Actions"
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
@@ -122,16 +150,23 @@ class DistrictAdmin(ModelAdmin):
     add_form = DistrictCreationForm
     form = DistrictChangeForm
     model = District
-    list_display = ["show_name", "region", "creator", 'created_at', 'status']
+    list_display = ["show_name", "region", "creator", 'created_at', 'status', 'show_actions']
     list_filter = ['region']
     search_fields = ('name',)
     ordering = ('name', 'region', 'created_at')
     filter_horizontal = ()
 
     def show_name(self, obj):
-        url = reverse('config_district_detail', args=[obj.id])
+        url = reverse('%s_%s_detail' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
         return format_html("<a href='{url}'>{name}</a>", url=url, name=obj.name)
     show_name.short_description = "Name"
+
+    def show_actions(self, obj):
+        edit_url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        delete_url = reverse('admin:%s_%s_delete' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        history_url = reverse('admin:%s_%s_history' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html(f"<a href='{edit_url}'><i class='fa fa-edit'></i></a><a class='text-danger mr-2 ml-2' href='{delete_url}'><i class='fa fa-trash'></i></a><a class='text-black-50' href='{history_url}'><i class='fa fa-clock'></i></a>", edit_url=edit_url, delete_url=delete_url, history_url=history_url)
+    show_actions.short_description = "Actions"
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'
@@ -184,13 +219,20 @@ class SettingAdmin(ModelAdmin):
     add_form = SettingCreationForm
     form = SettingChangeForm
     model = Setting
-    list_display = ["category", "tag", "description", "current_value", "creator", 'updated_at', 'status']
+    list_display = ["category", "tag", "description", "current_value", "creator", 'updated_at', 'status', 'show_actions']
     list_filter = ['category']
 
     search_fields = ('tag', 'category', 'description')
     ordering = ('category', 'tag', 'description')
     filter_horizontal = ()
     readonly_fields = ["status"]
+
+    def show_actions(self, obj):
+        edit_url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        delete_url = reverse('admin:%s_%s_delete' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        history_url = reverse('admin:%s_%s_history' % (obj._meta.app_label, obj._meta.model_name), args=[obj.id])
+        return format_html(f"<a href='{edit_url}'><i class='fa fa-edit'></i></a><a class='text-danger mr-2 ml-2' href='{delete_url}'><i class='fa fa-trash'></i></a><a class='text-black-50' href='{history_url}'><i class='fa fa-clock'></i></a>", edit_url=edit_url, delete_url=delete_url, history_url=history_url)
+    show_actions.short_description = "Actions"
 
     def status(self, obj):
         return 'Inactive' if obj.deleted_at else 'Active'

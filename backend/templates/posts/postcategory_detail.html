@@ -1,0 +1,32 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% block title %}{% trans 'Post Category:' %} {{ postcategory.name }} | {% trans 'Udaku' %}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content_title %} {% trans 'Post Category' %}: <strong>{{ postcategory.name }}</strong> {% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin:config_postcategory_changelist' %}">{% trans 'Post Categories' %}</a></li>
+        <li class="breadcrumb-item">{% trans 'Post Category View' %}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% get_side_menu using="app_list" as dashboard_list %}
+
+    <div class="container">
+      <table class="table">
+        <tr><td>ID:</td><td>{{ postcategory.id }}</td></tr>
+        <tr><td>Name:</td><td>{{ postcategory.name }}</td></tr>
+        <tr><td>Description:</td><td>{{ postcategory.description }}</td></tr>
+        <tr><td>Category:</td><td>{{ postcategory.category.name }}</td></tr>
+        <tr><td>Created by:</td><td>{{ postcategory.created_at }}</td></tr>
+        <tr><td>Creator:</td><td>{{ postcategory.creator.name }}</td></tr>
+        <tr><td>Last updated:</td><td>{{ postcategory.updated_at }}</td></tr>
+      </table>
+    </div>
+{% endblock %}

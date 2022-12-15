@@ -15,7 +15,7 @@ import os
 from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -30,6 +30,7 @@ BUILD_INSTALLED_APPS = [
 ]
 
 THIRD_PARTY_INSTALLED_APPS = [
+    "django_extensions",
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
@@ -46,8 +47,8 @@ THIRD_PARTY_INSTALLED_APPS = [
 
 INSTALLED_APPS = (
         [
-            "jazzmin",
             "ckeditor",
+            "jazzmin",
             "django.contrib.admin",
             "django.contrib.auth",
             "django.contrib.contenttypes",

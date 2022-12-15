@@ -35,7 +35,7 @@ class CustomUser(AbstractUser):
 class Category(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True)
-    parent = models.ForeignKey('self', related_name='categories', on_delete=models.DO_NOTHING, null=True)
+    category = models.ForeignKey('self', related_name='categories', on_delete=models.SET_NULL, null=True)
     creator = models.ForeignKey(CustomUser, related_name='created_categories', on_delete=models.DO_NOTHING)
     modifier = models.ForeignKey(CustomUser, related_name='modified_categories', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)

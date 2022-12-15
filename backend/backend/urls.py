@@ -56,13 +56,14 @@ router.register(r'comment-reaction', PostCommentReactionViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('admin/config/districts/<int:pk>', DistrictDetailView.as_view(), name='config_district_detail'),
+    path('admin/config/district/<int:pk>', DistrictDetailView.as_view(), name='config_district_detail'),
     path('admin/config/region/<int:pk>', RegionDetailView.as_view(), name='config_region_detail'),
-    path('admin/config/settings/<int:pk>', SettingDetailView.as_view(), name='config_setting_detail'),
-    path('admin/config/logs/<int:pk>', LogDetailView.as_view(), name='config_log_detail'),
-    path('admin/config/users/<int:pk>', UserDetailView.as_view(), name='config_user_detail'),
-    path('admin/config/categories/<int:pk>', CategoryDetailView.as_view(), name='config_category_detail'),
-    path('admin/config/posts/<int:pk>', PostDetailView.as_view(), name='posts_post_detail'),
-    path('admin/config/post-comments/<int:pk>', PostCommentDetailView.as_view(), name='posts_post_comment_detail'),
+    path('admin/config/setting/<int:pk>', SettingDetailView.as_view(), name='config_setting_detail'),
+    path('admin/config/log/<int:pk>', LogDetailView.as_view(), name='config_log_detail'),
+    path('admin/config/customuser/<int:pk>', UserDetailView.as_view(), name='config_user_detail'),
+    path('admin/config/category/<int:pk>', CategoryDetailView.as_view(), name='config_category_detail'),
+    path('admin/config/post/<int:pk>', PostDetailView.as_view(), name='posts_post_detail'),
+    path('admin/config/postcategory/<int:pk>', PostCategoryDetailView.as_view(), name='posts_postcategory_detail'),
+    path('admin/config/post-comment/<int:pk>', PostCommentDetailView.as_view(), name='posts_postcomment_detail'),
     path('admin/', admin.site.urls),
 ]

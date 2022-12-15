@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static jazzmin %}
+{% get_jazzmin_ui_tweaks as jazzmin_ui %}
+{% block title %}{% trans 'Post:' %} {{ post.name }} | {% trans 'Udaku' %}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content_title %} {% trans 'Post' %}: <strong>{{ post.name }}</strong> {% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'admin:posts_post_changelist' %}">{% trans 'posts' %}</a></li>
+        <li class="breadcrumb-item">{% trans 'post View' %}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% get_side_menu using="app_list" as dashboard_list %}
+
+    <div class="container">
+      <table class="table">
+        <tr><td>ID:</td><td>{{ post.id }}</td></tr>
+        <tr><td>Name:</td><td>{{ post.name }}</td></tr>
+        <tr><td>Body:</td><td>{{ post.body|striptags }}</td></tr>
+        <tr><td>Description</td><td>{{ post.description|striptags }}</td></tr>
+        <tr><td>Category</td><td>{{ post.category }}</td></tr>
+        <tr><td>Created:</td><td>{{ post.created_at }}</td></tr>
+        <tr><td>Creator:</td><td>{{ post.creator }}</td></tr>
+        <tr><td>Last updated:</td><td>{{ post.updated_at }}</td></tr>
+      </table>
+    </div>
+{% endblock %}
