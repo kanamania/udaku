@@ -36,9 +36,10 @@ def api_root(request, format=None):
         'regions': reverse('regions', request=request, format=format),
         'districts': reverse('districts', request=request, format=format),
         'posts': reverse('posts', request=request, format=format),
+        'post-categories': reverse('post-categories', request=request, format=format),
         'post-reactions': reverse('post-reactions', request=request, format=format),
-        'comments': reverse('comments', request=request, format=format),
-        'comment-reaction': reverse('comment-reaction', request=request, format=format),
+        'post-comments': reverse('comments', request=request, format=format),
+        'post-comment-reaction': reverse('comment-reaction', request=request, format=format),
     })
 
 
@@ -50,6 +51,7 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'districts', DistrictViewSet)
 router.register(r'regions', RegionViewSet)
 router.register(r'posts', PostViewSet)
+router.register(r'post-categories', PostCategoryViewSet)
 router.register(r'post-reactions', PostReactionViewSet)
 router.register(r'comments', PostCommentViewSet)
 router.register(r'comment-reaction', PostCommentReactionViewSet)

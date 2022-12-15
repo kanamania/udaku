@@ -18,7 +18,7 @@ class UserDetailView(generic.DetailView):
 
 
 class SettingViewSet(viewsets.ModelViewSet):
-    queryset = Setting.objects.all()
+    queryset = Setting.objects.exclude(deleted_at__isnull=False)
     serializer_class = SettingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
@@ -32,7 +32,7 @@ class SettingDetailView(generic.DetailView):
 
 
 class LogViewSet(viewsets.ModelViewSet):
-    queryset = Log.objects.all()
+    queryset = Log.objects.exclude(deleted_at__isnull=False)
     serializer_class = LogSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
@@ -46,7 +46,7 @@ class LogDetailView(generic.DetailView):
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.exclude(deleted_at__isnull=False)
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
@@ -60,7 +60,7 @@ class CategoryDetailView(generic.DetailView):
 
 
 class RegionViewSet(viewsets.ModelViewSet):
-    queryset = Region.objects.all()
+    queryset = Region.objects.exclude(deleted_at__isnull=False)
     serializer_class = RegionSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
@@ -74,7 +74,7 @@ class RegionDetailView(generic.DetailView):
 
 
 class DistrictViewSet(viewsets.ModelViewSet):
-    queryset = District.objects.all()
+    queryset = District.objects.exclude(deleted_at__isnull=False)
     serializer_class = DistrictSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]

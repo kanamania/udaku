@@ -11,12 +11,11 @@ class PostCategorySerializer(serializers.HyperlinkedModelSerializer):
     modifier_name = serializers.SerializerMethodField()
 
     def get_creator_name(self, obj):
-        return UserSerializer(obj.creator).name
+        return obj.creator.username
 
     def get_modifier_name(self, obj):
         try:
-            modifier = CustomUser.objects.filter(pk=obj.modifier).first()
-            return modifier.first_name + ' ' + modifier.last_name
+            return obj.modifier.username
         except:
             return ''
 
@@ -31,12 +30,11 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     modifier_name = serializers.SerializerMethodField()
 
     def get_creator_name(self, obj):
-        return UserSerializer(obj.creator).name
+        return obj.creator.username
 
     def get_modifier_name(self, obj):
         try:
-            modifier = CustomUser.objects.filter(pk=obj.modifier).first()
-            return modifier.first_name + ' ' + modifier.last_name
+            return obj.modifier.username
         except:
             return ''
 
@@ -51,7 +49,13 @@ class PostReactionSerializer(serializers.HyperlinkedModelSerializer):
     modifier_name = serializers.SerializerMethodField()
 
     def get_creator_name(self, obj):
-        return UserSerializer(obj.creator).name
+        return obj.creator.username
+
+    def get_modifier_name(self, obj):
+        try:
+            return obj.modifier.username
+        except:
+            return ''
 
     class Meta:
         model = PostReaction
@@ -64,7 +68,13 @@ class PostCommentSerializer(serializers.HyperlinkedModelSerializer):
     modifier_name = serializers.SerializerMethodField()
 
     def get_creator_name(self, obj):
-        return UserSerializer(obj.creator).name
+        return obj.creator.username
+
+    def get_modifier_name(self, obj):
+        try:
+            return obj.modifier.username
+        except:
+            return ''
 
     class Meta:
         model = PostComment
@@ -76,7 +86,13 @@ class PostCommentReactionSerializer(serializers.HyperlinkedModelSerializer):
     modifier_name = serializers.SerializerMethodField()
 
     def get_creator_name(self, obj):
-        return UserSerializer(obj.creator).name
+        return obj.creator.username
+
+    def get_modifier_name(self, obj):
+        try:
+            return obj.modifier.username
+        except:
+            return ''
 
     class Meta:
         model = PostCommentReaction
