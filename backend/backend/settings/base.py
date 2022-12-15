@@ -155,3 +155,10 @@ CELERY_RESULT_SERIALIZER = "json"
 FIXTURE_DIRS = [
     os.path.join(BASE_DIR, "fixtures"),
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'height': 'full',
+        'width': 'full',
+    },
+}

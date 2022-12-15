@@ -10,8 +10,7 @@ from .models import *
 class PostCategoryViewSet(viewsets.ModelViewSet):
     queryset = PostCategory.objects.exclude(deleted_at__isnull=False)
     serializer_class = PostCategorySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -27,8 +26,7 @@ class PostCategoryDetailView(generic.DetailView):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.exclude(deleted_at__isnull=False)
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -47,8 +45,7 @@ class PostDetailView(generic.DetailView):
 class PostReactionViewSet(viewsets.ModelViewSet):
     queryset = PostReaction.objects.exclude(deleted_at__isnull=False)
     serializer_class = PostReactionSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -60,8 +57,7 @@ class PostReactionViewSet(viewsets.ModelViewSet):
 class PostCommentViewSet(viewsets.ModelViewSet):
     queryset = PostComment.objects.exclude(deleted_at__isnull=False)
     serializer_class = PostCommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -77,8 +73,7 @@ class PostCommentDetailView(generic.DetailView):
 class PostCommentReactionViewSet(viewsets.ModelViewSet):
     queryset = PostCommentReaction.objects.exclude(deleted_at__isnull=False)
     serializer_class = PostCommentReactionSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)

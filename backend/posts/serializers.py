@@ -21,8 +21,9 @@ class PostCategorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = PostCategory
-        fields = ['id', 'name', 'description', 'creator', 'creator_name', 'modifier', 'modifier_name', 'remover', 'created_at', 'updated_at',
-                  'deleted_at']
+        read_only_fields = ('creator', 'modifier', 'remover', 'created_at', 'updated_at', 'deleted_at')
+        fields = ['id', 'name', 'description', 'creator', 'creator_name', 'modifier', 'modifier_name', 'remover',
+                  'created_at', 'updated_at', 'deleted_at']
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,8 +41,9 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'image', 'name', 'description', 'category', 'creator', 'creator_name', 'modifier', 'modifier_name', 'remover', 'created_at', 'updated_at',
-                  'deleted_at']
+        read_only_fields = ('creator', 'modifier', 'remover', 'created_at', 'updated_at', 'deleted_at')
+        fields = ['id', 'image', 'name', 'body', 'description', 'category', 'creator', 'creator_name', 'modifier',
+                  'modifier_name', 'remover', 'created_at', 'updated_at', 'deleted_at']
 
 
 class PostReactionSerializer(serializers.HyperlinkedModelSerializer):
@@ -59,6 +61,7 @@ class PostReactionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = PostReaction
+        read_only_fields = ('creator', 'modifier', 'remover', 'created_at', 'updated_at', 'deleted_at')
         fields = ['id', 'post', 'reaction', 'creator', 'creator_name', 'remover', 'created_at',
                   'deleted_at']
 
@@ -78,7 +81,9 @@ class PostCommentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = PostComment
-        fields = ['id', 'post', 'parent', 'description', 'creator', 'creator_name', 'remover', 'created_at', 'updated_at', 'deleted_at']
+        read_only_fields = ('creator', 'modifier', 'remover', 'created_at', 'updated_at', 'deleted_at')
+        fields = ['id', 'post', 'parent', 'description', 'creator', 'creator_name', 'remover', 'created_at',
+                  'updated_at', 'deleted_at']
 
 
 class PostCommentReactionSerializer(serializers.HyperlinkedModelSerializer):
@@ -96,4 +101,6 @@ class PostCommentReactionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = PostCommentReaction
-        fields = ['id', 'comment', 'reaction', 'creator', 'creator_name', 'remover', 'created_at', 'updated_at', 'deleted_at']
+        read_only_fields = ('creator', 'modifier', 'remover', 'created_at', 'updated_at', 'deleted_at')
+        fields = ['id', 'comment', 'reaction', 'creator', 'creator_name', 'remover', 'created_at', 'updated_at',
+                  'deleted_at']

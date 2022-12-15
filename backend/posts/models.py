@@ -32,7 +32,7 @@ class PostCategory(models.Model):
 
 
 class Post(models.Model):
-    image = models.ImageField(upload_to=user_directory_path)
+    image = models.ImageField(upload_to=user_directory_path, null=True)
     name = models.CharField(max_length=200)
     body = RichTextField(null=True, validators=[
         MinLengthValidator(320, 'body must contain at least 320 characters')
@@ -40,8 +40,8 @@ class Post(models.Model):
     description = models.TextField(null=True, validators=[
         MaxLengthValidator(320, 'description must contain at most 320 characters')
     ])
-    category = models.ForeignKey(PostCategory, related_name='posts', null=True, on_delete=models.SET_NULL)
-    creator = models.ForeignKey(CustomUser, related_name='created_posts', on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(PostCategory, related_name='posts', blank=True, null=True, on_delete=models.SET_NULL)
+    creator = models.ForeignKey(CustomUser, related_name='created_posts', blank=True, on_delete=models.DO_NOTHING)
     modifier = models.ForeignKey(CustomUser, related_name='modified_posts', blank=True, null=True, on_delete=models.DO_NOTHING)
     remover = models.ForeignKey(CustomUser, blank=True, null=True, related_name='removed_posts', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)

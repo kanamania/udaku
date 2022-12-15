@@ -21,7 +21,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.first_name+' '+self.last_name
+        return '{} {}'.format(self.first_name, self.last_name)
 
     def status(self):
         return None if self.deleted_at is None else 1
@@ -76,7 +76,8 @@ class District(models.Model):
     name = models.CharField(max_length=200)
     region = models.ForeignKey(Region, related_name='districts', on_delete=models.DO_NOTHING)
     creator = models.ForeignKey(CustomUser, related_name='created_districts', on_delete=models.DO_NOTHING)
-    modifier = models.ForeignKey(CustomUser, related_name='modified_districts', null=True, on_delete=models.DO_NOTHING)
+    modifier = models.ForeignKey(CustomUser, related_name='modified_districts', blank=True, null=True,
+                                 on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     deleted_at = models.DateTimeField(null=True)
@@ -88,7 +89,7 @@ class District(models.Model):
         return None if self.deleted_at is None else 1
 
     def __str__(self):
-        return self.name+': '+self.region.name
+        return '{}: {}'.format(self.name, self.region.name)
 
 
 class Log(models.Model):
@@ -96,8 +97,9 @@ class Log(models.Model):
     description = models.CharField(max_length=200)
     old = models.TextField(null=True)
     new = models.TextField(null=True)
-    record = models.BigIntegerField()
-    creator = models.ForeignKey(CustomUser, related_name='created_log', on_delete=models.DO_NOTHING)
+    record_type = models.CharField(max_length=128, null=True)
+    record_id = models.BigIntegerField(null=True)
+    creator = models.ForeignKey(CustomUser, related_name='created_log', null=True, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(null=True)
 
@@ -108,7 +110,7 @@ class Log(models.Model):
         return None if self.deleted_at is None else 1
 
     def __str__(self):
-        return self.tag+' '+self.description
+        return '{}: {}'.format(self.tag, self.description)
 
 
 class Setting(models.Model):
@@ -130,6 +132,4 @@ class Setting(models.Model):
         return None if self.deleted_at is None else 1
 
     def __str__(self):
-        return self.tag+' '+self.description
-
-
+        return '{}: {}'.format(self.tag, self.description)

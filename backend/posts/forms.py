@@ -15,7 +15,7 @@ class PostCreationForm(ModelForm):
 
     class Meta:
         model = Post
-        fields = ("name", "body", "description", "category", "status")
+        fields = ("name", "body", "description", "category", "image", "status")
 
 
 class PostChangeForm(ModelForm):
@@ -29,7 +29,7 @@ class PostChangeForm(ModelForm):
 
     class Meta:
         model = Post
-        fields = ("name", "body", "description", "category", "status")
+        fields = ("name", "body", "description", "category", "image", "status")
 
 
 class PostCategoryCreationForm(ModelForm):
