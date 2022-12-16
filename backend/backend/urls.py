@@ -21,8 +21,11 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 from config.views import *
-
 from posts.views import *
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 
 @api_view(['GET'])
@@ -57,6 +60,8 @@ router.register(r'comments', PostCommentViewSet)
 router.register(r'comment-reaction', PostCommentReactionViewSet)
 
 urlpatterns = [
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router.urls)),
     path('admin/config/district/<int:pk>', DistrictDetailView.as_view(), name='config_district_detail'),
     path('admin/config/region/<int:pk>', RegionDetailView.as_view(), name='config_region_detail'),

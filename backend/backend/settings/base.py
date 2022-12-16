@@ -32,7 +32,7 @@ BUILD_INSTALLED_APPS = [
 THIRD_PARTY_INSTALLED_APPS = [
     "django_extensions",
     "rest_framework",
-    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "corsheaders",
     "django_json_widget",
     "health_check",  # required
@@ -124,6 +124,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),

@@ -1,17 +1,13 @@
-import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
-import {postsSlice} from '../pages/posts/postsSlice';
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import rootReducer from "../reducers";
 
-export const store = configureStore({
-  reducer: {
-    posts: postsSlice.reducer,
-  },
-});
+const middleware = [thunk];
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
+
+export default store;
